@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %}收藏列表{% endblock %}
+
+
+{% block content %}
+
+<div class="consoleleft fl">
+    {% include 'menu.html' %}
+</div>
+<!-- 主要部分 -->
+<div class="consoleright fl">
+    <div class="collectlist articlelist ">
+        <h1>消息列表 ({{ sum }})
+            <a id="message_to_read_all" href="javascript:void(0);" class="btn-primary">全部标为已读</a>
+            <a id="message_to_not_read_all" href="javascript:void(0);" class="btn-primary">全部标为未读</a>
+            <a id="message_delete_read_all" href="javascript:void(0);" class="btn-primary warning">删除全部已读消息</a>
+            <a id="message_delete_not_read_all" href="javascript:void(0);" class="btn-primary warning">删除全部未读消息</a>
+        </h1>
+        <div class="message_class">
+            <a class="msgnav" id="weiduxiaoxi" href="{% url 'message_list' %}">未读消息({{ messages_num }})</a>
+            <a class="msgnav" id="yiduxiaoxi" href="{% url 'message_read' %}">已读消息({{ read_messages_num }})</a>
+        </div>
+        <br>
+        <!-- //未读消息列表 -->
+        <div id="weiduxiaoxi-list">
+            {% if messages %}
+            <p>{{type}}消息列表</p>
+            {% for message in messages %}
+            <div class="collectitem" style="width:100% ;">
+                <h1 class="fl">{{forloop.counter}}</h1>
+                <div class="fl">
+                    <img height="32px" width="32px" src="{{message.sender.touxiang.url}}" alt="">
+                </div>
+                <div class="fl">
+                    <h4 class="messagecontent">
+                        <a href="/user/?id={{message.sender.id }}&nid=1452102x4as5d2c5e5drt5d2&ct=2022a4d5e5$26"
+                            target="_blank">{{message.sender.username }}</a>
+                        {{ message.content | safe }}
+                    </h4>
+                </div>
+                <!-- 时间 -->
+                <span class="fr">{{message.create_time }}</span>
+                <a style="padding: 0 30px ;" class="fr delete_message" nid="{{message.id}}"
+                    href="javascript:void(0);">删除</a>
+                <a class="{{class}}" nid="{{message.id}}" href="javascript:void(0);">标为{{ operator }}</a>
+            </div><br>
+            {% endfor %}
+            {% else %}
+            <p>暂无消息</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    //删除消息
+    $('.delete_message').click(
+        function () {
+            var r = confirm("你确定要删除此条消息吗，删除后将不可恢复？")
+            if (r == true) {
+                var nid = $(this).attr('nid')
+                $.ajax({
+                    url: "/message/delete",
+                    type: "get",
+                    data: {
+                        nid: nid
+                    },
+                    dataType: "JSON",
+                    success: function (res) {
+                        if (res.status) {
+                            alert("删除成功！")
+                        } else {
+                            alert(res.error)
+                        }
+                        location.reload()
+                    }
+                })
+            }
+        }
+    )
+    //标为已读消息
+    $('.message_to_read').click(
+        function () {
+            var nid = $(this).attr('nid')
+            $.ajax({
+                url: "/message/to/read/",
+                type: "get",
+                data: {
+                    nid: nid
+                },
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        location.reload()
+                    } else {
+                        alert(res.error)
+                    }
+                }
+            })
+        }
+    )
+    //包围未读消息
+    $('.message_to_not_read').click(
+        function () {
+            var nid = $(this).attr('nid')
+            $.ajax({
+                url: "/message/to/not/read/",
+                type: "get",
+                data: {
+                    nid: nid
+                },
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        location.reload()
+                    } else {
+                        alert(res.error)
+                    }
+                }
+            })
+        }
+    )
+    //全部标为已读
+    $('#message_to_read_all').click(
+        function () {
+            var r = confirm("你确定要全部标为已读吗？")
+            if (r == true) {
+                $.ajax({
+                    url: "/message/to/read/",
+                    type: "get",
+                    data: {
+                        all: true,
+                    },
+                    dataType: "JSON",
+                    success: function (res) {
+                        if (res.status) {
+                            location.reload()
+                        } else {
+                            alert(res.error)
+                        }
+                    }
+                })
+            }
+        }
+    )
+    //全部标为已读
+    $('#message_to_not_read_all').click(
+        function () {
+            var r = confirm("你确定要全部标为未读吗？")
+            if (r == true) {
+                $.ajax({
+                    url: "/message/to/not/read/",
+                    type: "get",
+                    data: {
+                        all: true,
+                    },
+                    dataType: "JSON",
+                    success: function (res) {
+                        if (res.status) {
+                            location.reload()
+                        } else {
+                            alert(res.error)
+                        }
+                    }
+                })
+            }
+        }
+    )
+    //删除全部的已读消息
+    $("#message_delete_read_all").click(
+        function () {
+            var r = confirm("你确定要删除全部的已读消息吗？")
+            if (r == true) {
+                $.ajax({
+                    url: "/message/delete",
+                    type: "get",
+                    data: {
+                        delete_read_all: true,
+                    },
+                    dataType: "JSON",
+                    success: function (res) {
+                        if (res.status) {
+                            location.reload()
+                        } else {
+                            alert(res.error)
+                        }
+                    }
+                })
+            }
+        }
+    )
+    //删除全部的未读消息
+    $("#message_delete_not_read_all").click(
+        function () {
+            var r = confirm("你确定要删除全部的未读消息吗？")
+            if (r == true) {
+                $.ajax({
+                    url: "/message/delete",
+                    type: "get",
+                    data: {
+                        delete_not_read_all: true,
+                    },
+                    dataType: "JSON",
+                    success: function (res) {
+                        if (res.status) {
+                            location.reload()
+                        } else {
+                            alert(res.error)
+                        }
+                    }
+                })
+            }
+        }
+    )
+
+</script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block title %}首页{% endblock %}
+
+{% block content %}
+{% load get_title %}
+<div class="indexleft box fl">
+    <div class="box">
+        <img width="100%" src="https://jwc.ustb.edu.cn/images/subBanner.png" alt="">
+        <div class="indexleft-left fl">
+            <h1>精彩推荐
+                <a href="/show/more/hots/?type=recs" class="showmore fr">显示更多&gt;&gt;</a>
+            </h1>
+            <ul>
+                {% for hot in recs %}
+                <li>
+                    <a target="_blank" href="{{hot.link}}">
+                        <p style="color: black;">{{ forloop.counter}}. {{ hot.title }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="indexleft-left fl">
+            <h1>知识分享
+                <a href="/show/more/hots/?type=knows" class="showmore fr">显示更多&gt;&gt;</a>
+            </h1>
+            <ul>
+                {% for hot in knows %}
+                <li>
+                    <a target="_blank" href="{{hot.link}}">
+                        <p style="color: black;" >{{ forloop.counter}}. {{ hot.title }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="index-article-container">
+        <h1>所有博客
+            <a target="_blank" href="/show/more/hots/?type=articls" class="showmore fr">显示更多&gt;&gt;</a>
+        </h1>
+        <ul class="indexarticles">
+            {% for article in articles %}
+            <li>
+                <a target="_blank" href="/article/?nid={{ article.nid }}">
+                    <p style="color: black;">
+                        <span class="fontweight"> {{ forloop.counter }}. {{article.title}} </span>
+                        <span class="fr fontgray"> {{ article.create_time }} </span>
+                        <span class="fr fontgray articleuserindex">作者； {{article.author.username}} </span>
+                        <span class="fr fontgray">阅读量；{{article.read_num}} </span>
+                    </p>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="indexright fl box">
+    <h2>热门推送
+        <a href="/show/more/hots/?type=hots" class="showmore fr">显示更多&gt;&gt;</a>
+    </h2>
+    <ul class="hots">
+        {% for hot in hots %}
+        <li>
+            <a target="_blank" href="{{hot.link}}">
+                <p style="color: #000;">{{ forloop.counter}}. {{ hot.title }}</p>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+
+</script>
+{% endblock %}

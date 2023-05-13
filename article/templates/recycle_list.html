@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %} 回收站 {% endblock %}
+
+
+{% block content %}
+
+<div class="consoleleft fl">
+    {% include 'menu.html' %}
+</div>
+
+<div class="consoleright fl">
+    <div class="articlelist">
+        <h1>
+            回收站 <button id="article_delete_totally_all" type="submit" class="fontweight btn-primary"
+                style="background-color:red ;">清空回收站</button>
+            <button id="recycletodraftall" type="submit" class="fontweight btn-primary">全部恢复至回收站</button>
+        </h1><br>
+        <h4 class="tac fontgreen">如果想查看回收博客的具体内容，可以选择恢复至草稿箱，然后预览 </h4>
+        <div class="recyclelist articleleft">
+            {% if articles %}
+            {% for article in articles %}
+            <div class="recycledetail">
+                <h3>{{ forloop.counter }} ； {{ article.title }} </h3>
+                <p class="recycletime"> 创建时间 ； {{ article.create_time }} </p>
+                <button uid="{{article.nid}}" type="submit" class="btn-primary recycletodraft">恢复至草稿箱</button>
+                <button uid="{{article.nid}}" type="submit" class="btn-primary article_delete_totally"
+                    style="background-color:red ;">删除</button>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h1>回收站还没有内容</h1>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    //单个博客恢复
+    $('.recycletodraft').click(
+        function () {
+            console.log('点击了恢复至草稿箱按钮')
+            var r = confirm("你确定要恢复至草稿箱吗？");
+            if (r == true) {
+                var uid = $(this).attr('uid')
+                $.ajax({
+                    url: '/article_recycle_to_draft/',
+                    type: "get",
+                    data: {
+                        uid: uid
+                    },
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('成功恢复至草稿箱。')
+                            location.reload()
+                        } else {
+                            alert('恢复至草稿箱失败，数据不存在')
+                        }
+                    }
+                })
+            }
+
+        }
+    )
+    //批量全部博客恢复
+    $('#recycletodraftall').click(
+        function () {
+            console.log('点击了全部恢复至草稿箱按钮')
+            var r = confirm("你确定要恢复至草稿箱吗？");
+            if (r == true) {
+                $.ajax({
+                    url: '/article_recycle_to_draft/',
+                    type: "post",
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('成功恢复至草稿箱。')
+                            location.reload()
+                        } else {
+                            alert(res.error)
+                        }
+                    }
+                })
+            }
+        }
+    )
+    //彻底删除
+    $('.article_delete_totally').click(
+        function () {
+            var r = confirm("你确定要删除吗？删除后将不可恢复");
+            if (r == true) {
+                var uid = $(this).attr('uid')
+                $.ajax({
+                    url: '/article_delete_totally/',
+                    type: "get",
+                    data: {
+                        uid: uid
+                    },
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('删除成功。')
+                            location.reload()
+                        } else {
+                            alert('删除失败，数据不存在')
+                        }
+                    }
+                })
+            }
+        }
+    )
+    //删除全部
+    $('#article_delete_totally_all').click(
+        function () {
+            var r = confirm("你确定要删除吗？删除后将不可恢复");
+            if (r == true) {
+                $.ajax({
+                    url: '/article_delete_totally/',
+                    type: "post",
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('删除成功。')
+                            location.reload()
+                        } else {
+                            alert('删除失败，数据不存在')
+                        }
+                    }
+                })
+            }
+        }
+    )
+</script>
+{% endblock %}

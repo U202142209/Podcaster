@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %} {{ user.username }} {% endblock %}
+
+
+{% block content %}
+<div class="userdetail0 box">
+    <!-- 左边 -->
+    <div class="userdetailcontain1 fl box">
+        <h1 class="backgray"> 个人信息</h1><br>
+        <!-- 个人信息 -->
+        <div class="box" style="position:relative ;">
+            <div class="fl">
+                <img src="{{user.touxiang.url }}" width="110px" height="110px" alt="图片加载失败">
+            </div>
+            <div class="fl detailusername159">
+                <h1>{{user.username}}</h1>
+                <p>入住平台时间； {{user.create_time }}</p>
+            </div>
+            <!-- 关注按钮 -->
+            <button author_id="{{ user.id }}" id="getattention0" class="attentionbutton124 attentionbutton fontweight"
+                type="button">+关注</button>
+        </div>
+        <!-- 数据 -->
+        <h1>----------------------------------------------</h1>
+        <ul class="box userdata">
+            <li class="tac">
+                <h1> {{ user.article_num }} </h1>
+                <p>原创内容</p>
+            </li>
+            <li class="tac">
+                <h1> {{ user.total_read_num }} </h1>
+                <p>总阅读量</p>
+            </li>
+            <li class="tac">
+                <h1> {{ user.total_collect_num }} </h1>
+                <p>总收藏量</p>
+            </li>
+            <li class="tac">
+                <h1> {{ user.fensi }} </h1>
+                <p>粉丝</p>
+            </li>
+            <li class="tac">
+                <h1> {{ user.attention_num }} </h1>
+                <p>关注</p>
+            </li>
+        </ul>
+    </div>
+    <!-- 右边 -->
+    <div class="userdetailcontain2 fl">
+        <h1 class="backgray">原创内容</h1>
+        <ul class="articlecontent123">
+            {% if articles %}
+            {% for article in articles %}
+            <li>
+                <a target="_blank" class="user_article btn-primary fr" href="/article/?nid={{ article.nid }}">点击查看</a>
+                <h2>{{forloop.counter}}. {{article.title}}</h2>
+                <span>发布于；{{ article.create_time }}</span>
+                <span>已读；{{article.read_num}}</span>
+                <span>收藏；{{article.love_num}}</span>
+            </li>
+            {% endfor %}
+            {% else %}
+            <h4 class="fontgray">
+                此博主还没有发布任何博客
+            </h4>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block js %}
+{% load static %}
+<script src="{% static 'js/main.js' %}"></script>
+
+<script>
+
+</script>
+{% endblock %}

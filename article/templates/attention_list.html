@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block title %} 关注列表 {% endblock %}
+
+
+{% block content %}
+
+<div class="consoleleft fl">
+    {% include 'menu.html' %}
+</div>
+
+<div class="consoleright fl">
+    <div class="articlelist">
+        <h1 class="inline">
+            关注列表 ({{ sum }})
+        </h1>
+
+        <div class="attentionlist1">
+            {% if attentions %}
+            {% for attentio in attentions %}
+            <div class="fl tac">
+                <a target="_blank" href="/user/?id={{attentio.host.id}}&nid=2022450afg25d2s">
+                    <img height="90px" src="{{ attentio.host.touxiang.url }}" alt="">
+                    <h2>{{ attentio.host.username }}</h2>
+                    <p>粉丝；{{ attentio.host.fensi }}</p>
+                    <p>关注; {{ attentio.host.attention_num }} </p>
+                </a>
+                <div>
+                    <button class="attention_delete btn-primary backred fontweight shubiao"
+                        host_id="{{attentio.host_id}}" id="host_id_{{attentio.host_id}}" type="button">取消关注</button>
+                </div>
+                <div> </div>
+
+            </div>
+            {% endfor %}
+            {% else %}
+            <h1>你还没有关注的博主 <a href="/">去逛逛</a></h1>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+{% load static %}
+<script src="{% static 'js/attention.js' %}"></script>
+<script>
+
+</script>
+{% endblock %}

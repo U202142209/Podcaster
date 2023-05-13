@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %}收藏列表{% endblock %}
+
+
+{% block content %}
+
+<div class="consoleleft fl">
+    {% include 'menu.html' %}
+</div>
+<!-- 主要部分 -->
+<div class="consoleright fl">
+    <div class="collectlist articlelist ">
+        <h1>收藏列表 ({{ sum }})</h1><br><br>
+        {% if collects %}
+        {% for collect in collects %}
+        <div class="collectitem">
+            <h1 class="fl">{{ forloop.counter }}. </h1>
+            <img class="fl" height="35px" src="{{collect.article.author.touxiang.url }}" alt="">
+            <a href="/article/?nid={{ collect.article.nid }}" target="_blank">
+                <li class="fl">
+                    <h2> {{ collect.article.title }} </h2>
+                    <span>博主 ; {{ collect.article.author.username }}</span>
+                    <span class="fr">收藏时间 ; {{ collect.create_time }} </span>
+                </li>
+            </a>
+            <button user_id="{{collect.user_id}}" article_id="{{collect.article_id}}"
+                class="fr deletecollect collect_delete" type="button">取消收藏</button>
+
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>你还没有收藏任何博客。</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+    //删除收藏
+    $('.collect_delete').click(
+        function () {
+            var r = confirm("你确定要取消收藏这篇博客吗，取消后将不可恢复的呀。")
+            if (r == true) {
+                var user_id = $(this).attr('user_id')
+                var article_id = $(this).attr('article_id')
+                $.ajax({
+                    url: '/collect/delete/',
+                    type: "get",
+                    data: {
+                        user_id: user_id,
+                        article_id: article_id
+                    },
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('取消收藏成功。')
+                        } else {
+                            alert(res.error)
+                        }
+                        console.log(res)
+                        location.reload()
+                    }
+                })
+            }
+        }
+    )
+</script>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %} 草稿箱 {% endblock %}
+
+
+{% block content %}
+
+<div class="consoleleft fl">
+    {% include 'menu.html' %}
+</div>
+
+<div class="consoleright fl">
+    <div class="articlelist">
+        <h1 class="inline">
+            草稿箱
+        </h1>
+        <div class="inline">
+            <a href="{% url 'article_add' %}" class="btn-primary shubiao">新增博客</a>
+        </div>
+        <div>
+            {% if articles %}
+            <table class="table1">
+                <thead>
+                    <tr class="backgray">
+                        <th>序号</th>
+                        <th>标题</th>
+                        <th>内容</th>
+                        <th>创建时间</th>
+                        <th>是否公开</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% load get_title %}
+
+                    {% for article in articles %}
+                    <tr>
+                        <th>{{ forloop.counter }}</th>
+                        <th> {{ article.title | get_title }}</th>
+                        <th><a target="_blank" href="/article/?nid={{ article.nid }}">效果预览</a></th>
+                        <th> {{ article.create_time }}</th>
+                        <th>{{ article.publlic}}</th>
+                        <th>
+                            <a href="/article/change/{{article.nid}}">编辑</a>
+                            <input uid="{{article.nid}}" class="delete shubiao" value="删除" type="button">
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <h1>草稿箱里还没有内容 <a href="{% url 'article_add' %}">去新增</a></h1>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    //删除
+    $('.delete').click(
+        //删除确定对话框
+        function delete_check() {
+            var uid = $(this).attr('uid')
+            var fun = article_to_recycle
+            fun((uid))
+        }
+    )
+</script>
+{% endblock %}
