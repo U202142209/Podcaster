@@ -1,0 +1,90 @@
+.tac {
+    text-align: center;
+}
+
+
+#xiaoyuanqiangdatacontent li:nth-child(3n+1),
+.next_comments>div:nth-child(3n+1) {
+    background-color: rgb(217, 242, 250);
+}
+.next_comments {
+    padding-left: 10%;
+}
+
+#xiaoyuanqiangdatacontent li:nth-child(3n+2),
+.next_comments>div:nth-child(3n+2) {
+    background: orange;
+}
+
+#xiaoyuanqiangdatacontent li:nth-child(3n+3) {
+    background-color: lightblue;
+}
+
+.spanright {
+    float: right;
+    margin-right: 5%;
+}
+
+.articletitle {
+    font-weight: bold;
+    padding-right: 4%;
+}
+
+.articlecontent {
+    text-indent: 2em;
+}
+
+.details {
+    margin: 4% 0;
+}
+
+body {
+    background-color: #efefef;
+}
+
+.pagedivide>ul>a {
+    font-size: 50%;
+    padding: 0 15%;
+}
+
+.content {
+    padding: 5%;
+}
+
+.detail_content {
+    background-color: #efefef;
+    padding: 0 10%;
+}
+
+.detail_decorate {
+    background-color: red;
+    width: 100%;
+    height: 10%;
+}
+
+.detail_article_content000 {
+    padding: 0 5%;
+    overflow: auto;
+}
+
+.detail_comment_content {
+    padding: 1% 5%;
+}
+
+.font_gray {
+    color: gray;
+    font-size: small;
+}
+
+.comment_father {
+    padding: 2% 0;
+}
+
+a {
+    color: black;
+}
+
+.next_comments {
+    padding-left: 15%;
+
+}
