@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %}新增博客{% endblock %}
+
+
+{% block content %}
+
+<div class="consoleleft fl">
+    {% include 'menu.html' %}
+</div>
+
+<div class="consoleright fl">
+    <div class="articleadd fl">
+        <h2 class="inline" id="formtitle">
+            {% if change %}
+            编辑博客
+            {% else %}
+            新建博客
+            {% endif %}
+        </h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <!-- ModelForm表单 -->
+            {% for field in form %}
+            <div>
+                <div>
+                    <label class="label1" for="{{ field.name }}">{{ field.label}}</label>
+                </div>
+                {{ field }}
+                <p class="fontred errors">{{ field.errors.0}} </p>
+            </div>
+            {% endfor %}
+            <input id="btn-save" type="submit" value="保存" class="btn-primary" />
+            <input style="background-color:red ;" type="reset" value="重置" class="btn-primary" />
+        </form>
+    </div>
+
+    <!-- 提示 -->
+    <div style="width:470px ;" class="articleleft fr">
+        <h2 class="tac fontgreen">温馨提示</h2>
+        <article>
+            1.为了提高博客的质量，博客的标题应<strong>小于二十四个字符</strong> 。否则无法保存。
+        </article>
+        <article>
+            2.博客的内容使用的是ckeditor富文本编辑器，支持不同级别的标题、各种文字样式、支持插入图片、预览等新特性。为用户提供良好的使用体验
+        </article>
+        <article>
+            3.'状态'分为'立即发表'和'暂时存进草稿箱'两种，‘立即发表’保存之后将无法再次修改，‘保存进草稿箱’可以多次修改，可在草稿箱中进行查看，修改完成后可发布为正式版。
+        </article>
+        <article>
+            4.选择‘公开’，并发表之后，将在网站首页将博客展示给所有的用户,并且允许其他用户收藏、评论，不公开则只有自己可以查看，
+        </article>
+        <div class="tac">
+            <!-- <button id="yulan" type="submit" class="btn-primary shubiao">效果预览</button> -->
+        </div>
+    </div>
+</div>
+
+
+<!-- 消息提醒，弹出显示 -->
+{% if message %}
+<div>
+    <div id="light" class="white_content">
+        <h2 class="fontgreen">{{message}}</h2>
+    </div>
+    <div id="fade" class="black_overlay"
+        onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">
+    </div>
+</div>
+{% endif %}
+
+
+<!-- 文章预览 -->
+<div id="yulanup" class="yulanup">
+    <div class="articleadd fl">
+        <h2 class="inline" id="formtitle">
+            {% if change %}
+            编辑博客
+            {% else %}
+            新建博客
+            {% endif %}
+        </h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <!-- ModelForm表单 -->
+            {% for field in form %}
+            <div>
+                <div>
+                    <label class="label1" for="{{ field.name }}">{{ field.label}}</label>
+                </div>
+                {{ field }}
+                <p class="fontred errors">{{ field.errors.0}} </p>
+            </div>
+            {% endfor %}
+            <input id="btn-save" type="submit" value="保存" class="btn-primary" />
+            <input style="background-color:red ;" type="reset" value="重置" class="btn-primary" />
+        </form>
+    </div>
+</div>
+<div id="yulandown" class="yulandown"></div>
+
+
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+

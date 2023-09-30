@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block css %}
+
+{% endblock %}
+{% block title %}注册{% endblock %}
+
+
+{% block content %}
+<div class="registerback backgreen"></div>
+<div class="registerback backgray"></div>
+<div class="tac">
+    <div class="registerform marginauto">
+        <form id="reform" novalidate method="post">
+            {% csrf_token %}
+            <h1>注册</h1>
+            <!-- 用户名 -->
+            <div class="divinput">
+                <label for="username"></label>
+                {{ form.username }}
+            </div>
+            <p class="fontred"> {{ form.username.errors.0 }}</p>
+            <!-- 邮箱 -->
+            <div class="divinput">
+                <label for="id__email"></label>
+                {{form.email }}
+            </div>
+            <p class="fontred"> {{ form.email.errors.0 }}</p>
+
+            <!-- 验证码 -->
+            <div class="divinput">
+                <label for="code"></label>
+                {{form.code }}
+                <input type="button" value="获取验证码" class="btn" id="getemailcode0">
+            </div>
+            <p class="fontred"> {{ form.code.errors.0 }}</p>
+            
+            <p id="codedisplay" class="fontred"> </p>
+            
+            <!-- 密码 -->
+            <div class="divinput">
+                <label for="password"></label>
+                {{ form.password }}
+            </div>
+            <p class="fontred"> {{ form.password.errors.0 }}</p>
+            <!-- 确认密码 -->
+            <div class="divinput">
+                <label for="conform_password"></label>
+                {{ form.conform_password }}
+            </div>
+            <p class="fontred"> {{ form.conform_password.errors.0 }}</p>
+
+            <div>
+                <button class="backgreen btnlogin" type="submit">注册</button>
+            </div>
+            <div>
+                <br><br><a href="{% url 'login' %}">已有账号，去登录</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block js %}
+<script>
+    //判断是否为合法的邮箱
+    function IsEmail(str) {
+        var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+        return reg.test(str);
+    }
+
+    //获取验证码
+    $("#getemailcode0").click(
+        function () {
+            var email = $("#id_email").val()
+            console.log("输入的邮箱是；" + email)
+            if (!IsEmail(email)) {
+                $("#codedisplay").text('请输入有效的邮箱')
+                return
+            } else {
+                console.log("点击了按钮，即将发送发展吗")
+                $.ajax({
+                    url: "/getemailcode/",
+                    dataType: "JSON",
+                    type: "get",
+                    data: {
+                        "email": email
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        $("#codedisplay").text(res.msg)
+                    },
+                    error: function (res) {
+                        console.log(res)
+                        console.log('请求失败')
+                    }
+                })
+            }
+        }
+    )
+</script>
+{% endblock %}

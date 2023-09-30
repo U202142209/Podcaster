@@ -1,0 +1,1037 @@
+/* 字体图标
+https://icomoon.io/app/#/select/font 
+*/
+
+
+@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?nukazs');
+    src: url('../fonts/icomoon.eot?nukazs#iefix') format('embedded-opentype'),
+        url('../fonts/icomoon.ttf?nukazs') format('truetype'),
+        url('../fonts/icomoon.woff?nukazs') format('woff'),
+        url('../fonts/icomoon.svg?nukazs#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0px;
+    box-sizing: border-box;
+    font-family: 'icomoon';
+}
+
+a {
+    text-decoration: none;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+li {
+    list-style: none;
+}
+
+.fontred {
+    color: red;
+}
+
+.fontgreen {
+    color: green;
+}
+
+.box::after {
+    content: "";
+    visibility: hidden;
+    height: 0;
+    display: block;
+    clear: both;
+}
+
+.backblue {
+    background-color: cornflowerblue;
+}
+
+/* 最大的容器 */
+.container {
+    width: 1400px;
+    margin: 0 auto;
+}
+
+.marginauto {
+    margin: 0 auto;
+}
+
+.header {
+    margin-top: 20px;
+    padding: 0 110px;
+    height: 80px;
+    /* background-color: pink; */
+}
+
+.container::after {
+    content: "";
+    visibility: hidden;
+    height: 0;
+    display: block;
+    clear: both;
+}
+
+.header01 img {
+    vertical-align: middle;
+}
+
+.input1 {
+    height: 35px;
+    outline: none;
+    line-height: 35px;
+    border: 0;
+    display: inline-block;
+    font-size: 17px;
+    padding: 0 15px;
+}
+
+.search1 {
+    border: 2px solid #409eff;
+    outline: #409eff;
+}
+
+.btn {
+    /* background-color: rgb(64, 80, 180); */
+    /* 背景变成灰色 */
+    background-color: gray;
+    color: white;
+}
+
+.login1 {
+    margin: 0 20px;
+    font-size: 25px;
+}
+
+.headernav li {
+    float: left;
+    padding-top: 18px;
+}
+
+
+
+
+
+
+
+
+
+
+/* -------------菜单css代码----------begin---------- */
+.menuDiv {
+    overflow: hidden;
+    height: 60px;
+    /* background-color: rgb(63, 81, 181); */
+    /* 背景变成灰色 */
+    background-color: gray;
+
+}
+
+/* 设置ul和li的样式 */
+.menuDiv ul,
+.menuDiv li {
+    float: left;
+}
+
+/* 设置二级菜单绝对定位，并隐藏 */
+.menuDiv>ul>li>ul {
+    position: absolute;
+    display: none;
+    z-index: 5;
+}
+
+/* 设置二级菜单的li的样式 */
+.menuDiv>ul>li>ul>li {
+    float: none;
+}
+
+/* 鼠标放在一级菜单上，显示二级菜单 */
+.menuDiv>ul>li:hover ul {
+    display: block;
+}
+
+/* 一级菜单 */
+.menuDiv>ul>li>a {
+    /* width: 165px; */
+    padding: 0 35px;
+    line-height: 60px;
+    color: #fff;
+    font-size: 19px;
+    font-weight: bold;
+    display: block;
+}
+
+/* 在一级菜单中，鼠标放上去的样式 */
+.menuDiv>ul>li>a:hover {
+    /* background-color: rgb(63, 81, 181); */
+    /* 背景变成灰色 */
+    background-color: gray;
+}
+
+/* 二级菜单 */
+.menuDiv>ul>li>ul>li>a {
+    /* width: 165px; */
+    padding: 0 35px;
+    line-height: 45px;
+    color: #fff;
+    /* background-color: rgb(63, 81, 181); */
+    /* 背景变成灰色 */
+    background-color: gray;
+    display: block;
+}
+
+/* 在二级菜单中，鼠标放上去的样式 */
+.menuDiv>ul>li>ul>li>a:hover {
+    background-color: rgb(121, 160, 190);
+}
+
+
+
+.tac {
+    text-align: center;
+}
+
+/* 注册页面的样式 */
+
+.registerback {
+    height: 400px;
+}
+
+.registerform {
+    position: absolute;
+    top: 230px;
+    left: calc(50% - 200px);
+    width: 400px;
+    padding: 50px 0;
+    background-color: #fff;
+    box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.1);
+}
+
+.backgreen {
+    background-color: rgb(0, 150, 136);
+}
+
+.backgray {
+    background-color: rgb(231, 231, 231);
+}
+
+.btnlogin {
+    width: 250px;
+    height: 40px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* 输入框的容器 */
+.divinput {
+    margin: 10px 0;
+    height: 45px;
+    font-size: 22px;
+    border: 5px solid #efefef;
+    margin-left: 30px;
+    position: relative;
+}
+
+.input2 {
+    font-size: 16px;
+    outline: none;
+}
+
+#getemailcode0 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 40px;
+    width: 120px;
+    font-size: 15px;
+}
+
+/* 展示获取的验证码提示 */
+#codedisplay {
+    padding: 10px 30px;
+    line-height: 20px;
+}
+
+
+
+/* 弹出层的样式 */
+.black_overlay {
+    display: block;
+}
+
+.black_overlay,
+.yulandown {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 200%;
+    background-color: black;
+    z-index: 1001;
+    /* z-index 属性设置元素的堆叠顺序。拥有更高堆叠顺序的元素总是会处于堆叠顺序较低的元素的前面。*/
+    -moz-opacity: 0.8;
+    opacity: .60;
+    /* opacity 属性设置元素的不透明级别。*/
+    filter: alpha(opacity=28);
+    /* 所有浏览器都支持 opacity 属性。   注释：IE8 以及更早的版本支持替代的 filter 属性。例如：filter:Alpha(opacity=50)。*/
+}
+
+.white_content {
+    display: block;
+    left: calc(50% - 400px);
+    width: 800px;
+    padding: 50px;
+}
+
+.white_content,
+.yulanup {
+    position: absolute;
+    top: 100px;
+    background-color: #fff;
+    box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1002;
+    overflow: auto;
+}
+
+/* 文章的预览效果 */
+.yulanup {
+    display: none;
+    width: 1000px;
+    /* 自适应高度 */
+    /* height: 600px; */
+    left: calc(50% - 700px);
+}
+
+.yulandown {
+    display: none;
+}
+
+img {
+    /* 背景变成灰色 */
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    /*为兼容各浏览加上各前缀*/
+    -ms-filter: grayscale(100%);
+    -o-fliter: garyscale(100%);
+
+}
+
+
+
+#loginform h1,
+#btn123 {
+    text-align: center;
+}
+
+#imgcontainer {
+    position: absolute;
+    top: 0;
+    right: 15px;
+}
+
+/* 头部的用户信息 */
+.user0 {
+    font-size: 20px;
+    padding: 0 10px;
+    line-height: 45px;
+}
+
+/* 用户控制台菜单样式 */
+.consoleleft {
+    width: 140px;
+}
+
+.console_menu {
+    border: 2px solid blue;
+}
+
+.console_menu li {
+    margin: 10px;
+    text-align: center;
+    font-size: 20px;
+    background-color: rgb(231, 231, 231);
+    height: 35px;
+    line-height: 35px;
+    cursor: pointer;
+}
+
+.console_menu li:hover {
+    background-color: #fff;
+    border-bottom: 5px solid yellow;
+}
+
+/* 右边操淡兰顶部的图片 */
+.consoleright #conseole-img img {
+    width: calc(1400px - 120px);
+    height: 100px;
+}
+
+/* 表格样式 */
+.table1 tr th {
+    padding: 15px 20px;
+}
+
+.table1 tbody tr:hover {
+    background-color: rgb(231, 231, 231);
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 0 25px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background-color: rgb(47, 99, 153);
+    color: white;
+    font-size: 20px;
+}
+
+#articlecontent123 {
+    text-indent: 0%;
+}
+
+.shubiao {
+    cursor: pointer;
+}
+
+.articlelist {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.inline {
+    margin: 20px;
+}
+
+.input3 {
+    margin: 10px 5px;
+    display: block;
+    width: 500px;
+    padding: 0 20px;
+    line-height: 40px;
+    font-size: 20px;
+    height: 40px;
+    outline: none;
+    border: 2px solid lightblue;
+}
+
+.label1 {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.fontweight {
+    font-weight: bold;
+}
+
+/* 新增博客 */
+.articleadd {
+    width: 630px;
+    margin-bottom: 100px;
+    padding: 10px;
+    border: 25px solid #efefef;
+}
+
+.delete {
+    padding: 5px 10px;
+    background-color: red;
+    color: #fff;
+}
+
+/* 博客详情页面 */
+.articleleft,
+.articleright {
+    padding: 50px 10PX;
+    border: 30px solid #efefef;
+    overflow: hidden;
+    position: relative;
+}
+
+.articleright {
+    width: 400px;
+    border-left: 0;
+}
+
+.articleleft {
+    width: 1000px;
+}
+
+.detail1 {
+    margin: 20px;
+}
+
+/* 添加博客右边的而提示段落 */
+.articleleft article {
+    margin: 1em;
+    line-height: 1.5em;
+    letter-spacing: 0.2em;
+}
+
+
+/* 回收站样式 */
+.recyclelist {
+    margin-top: 20px;
+    width: 1200px;
+
+}
+
+.recycledetail {
+    padding: 10px;
+    float: left;
+    width: 520px;
+    border: 1px solid rgb(229, 213, 213);
+}
+
+/* 回收时间 */
+.recycletime {
+    margin: 10px;
+}
+
+/* 博客右边的样式 */
+.articleright img {
+    vertical-align: middle;
+}
+
+.authordetail0 {
+    margin-left: 10px;
+}
+
+.articleauthor {
+    font-size: 30px;
+    line-height: -20px;
+    height: 35px;
+}
+
+.shuju001 {
+    margin: 10px 0;
+}
+
+/* 关注按钮 */
+.attentionbutton {
+    width: 90px;
+    height: 32px;
+    border: 1px solid red;
+    border-radius: 16px;
+    font-size: 18px;
+    background-color: #fff;
+}
+
+.attentionbutton:hover {
+    background-color: red;
+    color: #fff;
+}
+
+/* 作者数据 */
+.author_data {
+    border: 1px solid red;
+    margin: 15px auto;
+    padding: 10px 15px;
+    width: 350px;
+    border-radius: 30px;
+}
+
+.author_data li {
+    float: left;
+    width: 105px;
+    border: 2px solid #efefef;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.author_data li:hover {
+    background-color: #efefef;
+}
+
+.author_data li p {
+    margin: 5px 0;
+}
+
+.backred {
+    background-color: red;
+}
+
+/* 收藏按钮 */
+#shoucangbutton {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+}
+
+/* 收藏列表 */
+/* .collectlist {
+    margin-top: 30px;
+    margin-left: 50px;
+} */
+.collectitem {
+    padding: 25px 0;
+    width: 1000px;
+    height: 70px;
+}
+
+.collectitem:hover {
+    background-color: #efefef;
+}
+
+.collectitem li {
+    width: 800px;
+}
+
+.collectitem .fl {
+    margin: 0 4px;
+}
+
+/* 删除收藏按钮 */
+.deletecollect {
+    background-color: red;
+    color: #fff;
+    width: 80px;
+    height: 30px;
+}
+
+/* 关注列表 */
+.attentionlist1 .fl {
+    margin: 10px 25px;
+}
+
+.attentionlist1 .fl p {
+    margin: 5px 0;
+}
+
+.taf li {
+    text-align: left;
+}
+
+/* 个人细腻些 */
+.consoleright {
+    padding-left: 20px;
+    padding-top: 0px;
+    width: 1250px;
+    position: relative;
+    border: 25px solid #efefef;
+    padding: 15px 30px;
+}
+
+
+.consolecontent0 .fl {
+    height: 110px;
+    margin: 0 10px;
+}
+
+/* 用户名 */
+.consolecontent0 .fl .username {
+    line-height: 90px;
+}
+
+/* 数据 */
+.userdata0 {
+    float: right;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    border-left: 5px solid #aaa;
+}
+
+.userdata0 li {
+    float: left;
+    margin: 0 15px;
+}
+
+/* 设置 */
+.settings {
+    padding: 40px 0;
+}
+
+
+
+/* checkbox的开关样式 */
+/* 必须是Input class 添加 switch 才能实现以下效果 */
+input[type=checkbox].switch {
+    float: right;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    width: 2.6rem;
+    height: 1.52rem;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    background-color: #ccc;
+}
+
+input[type=checkbox].switch::after {
+    content: '';
+    display: inline-block;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 0 2px #999;
+    transition: left 0.1s linear;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+input[type=checkbox].switch:checked {
+    background-color: #32BA58;
+}
+
+/* 
+        1.默认为不被选中的状态
+        当input[type=checkbox] 被选中的时候，伪元素显示下面效果(位置发生变化)
+         */
+input[type=checkbox].switch:checked::after {
+    position: absolute;
+    top: 0;
+    /* left:1.2rem; */
+    left: 50%;
+}
+
+/* 状态 */
+input[type=checkbox].switch-info.switch:checked {
+    background-color: #409eff;
+}
+
+input[type=checkbox].switch-danger.switch:checked {
+    background-color: rgb(255, 73, 73);
+}
+
+input[type=checkbox].switch-warm.switch:checked {
+    background-color: hsl(51, 93%, 54%);
+}
+
+input[type=checkbox].switch-primary.switch:checked {
+    background-color: #409eff;
+}
+
+input[type=checkbox].switch-primary.switch {
+    background-color: rgb(255, 73, 73);
+}
+
+.settingsdiv {
+    margin: 30px;
+    width: 550px;
+}
+
+/* 上传头像的表单 */
+#touxiangform {
+    padding: 10px 60px;
+}
+
+
+
+
+/* 用户详情页面css样式 */
+.userdetailcontain1 {
+    width: 600px;
+}
+
+.userdetailcontain2 {
+    width: 800px;
+}
+
+.detailusername159 {
+    height: 110px;
+    padding-left: 30px;
+    line-height: 50px;
+}
+
+/* 关注按钮 */
+.attentionbutton124 {
+    position: absolute;
+    right: 50px;
+    top: 40px;
+}
+
+.userdata li {
+    float: left;
+    padding: 10px 15px;
+    border: 2px solid #efefef;
+}
+
+.userdata li p {
+    /* font-size: 20px; */
+    padding: 5px 0;
+}
+
+.userdetailcontain2,
+.userdetailcontain1 {
+    border: 20px solid #efefef;
+}
+
+/* 用户文章列表 */
+.articlecontent123 {
+    padding: 20px 5px;
+}
+
+.articlecontent123 li {
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid rgb(190, 180, 180);
+}
+
+.articlecontent123 li:hover,
+#other_articles li:hover,
+.attentionlist1>div:hover,
+.userdata li:hover {
+    background-color: #efefef;
+}
+
+.articlecontent123 li h2 {
+    margin: 6px;
+}
+
+.articlecontent123 li span {
+    margin: 0 25px;
+}
+
+.fontgray {
+    color: gray;
+}
+
+/* 点击查看文章的样式 */
+.user_article {
+    border-radius: 20px;
+    background-color: rgb(208, 237, 208);
+    color: #000;
+}
+
+/* 消息分类 */
+/* 已读消息 */
+.message_class a {
+    display: inline-block;
+    /* background-color: rgb(47, 99, 153);
+    color: white; */
+    padding: 10px;
+    margin-right: 200px;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+/* 消息内容 */
+.messagecontent {
+    margin-left: 20px;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.warning {
+    background-color: red;
+}
+
+#other_articles {
+    padding: 5px;
+    border: 1px solid #000;
+}
+
+#other_articles li {
+    padding: 8px;
+}
+
+/* 子节点 */
+.children {
+    padding-left: 50px;
+
+}
+
+.vm {
+    vertical-align: middle;
+}
+
+/* 评论展示 */
+.shoupinglun {
+    text-indent: 1em;
+    /* 上右下左 */
+    padding: 0 30px 10px 50px;
+}
+
+.operatoea {
+    margin: 0 15px;
+}
+
+#gengexian {
+    width: 100%;
+    height: 10px;
+    margin: 10px 0;
+    background-color: #efefef;
+}
+
+#fabiaopinglun {
+    margin-top: 35px;
+    border-top: 40px solid #efefef;
+}
+
+#fabiaopinglun textarea {
+    height: 30px;
+    border: 1px solid #409eff;
+    width: 800px;
+    height: 110px;
+    padding: 10px;
+    font-size: 18px;
+    resize: none;
+    outline: #409eff;
+}
+
+#fabiaopinglun span button {
+    margin: 10px;
+    cursor: pointer;
+}
+
+/* 首页的样式 */
+.indexleft {
+    width: 1100px;
+}
+
+/* 首页右边部分 */
+.indexright {
+    width: 300px;
+    height: 500px;
+    padding: 30px 10px;
+}
+
+.indexleft-left {
+    width: 550px;
+    border: 1px solid #efefef;
+    margin-top: 30px;
+    padding: 0 30px;
+}
+
+.indexleft-left h1 {
+    margin: 5px;
+}
+
+.indexleft-left ul li {
+    margin: 15px 0;
+}
+
+
+
+
+
+
+/* 博客列表 */
+.index-article-container {
+    border: 1px solid #efefef;
+    padding: 30px 30px;
+}
+
+.indexarticles li {
+    margin: 25px 0;
+
+}
+
+.articleuserindex {
+    margin: 0 20px;
+    width: 200px;
+}
+
+
+
+/* 底部信息栏 */
+.fooster {
+    width: 1400px;
+    height: 300px;
+    background-color: #efefef;
+}
+
+/* 热门推送 */
+.hots li {
+    margin: 20px 0;
+}
+
+/* 显示更多 */
+.showmore {
+    font-size: 15px;
+}
+
+/* 裂变详情 */
+.listcontainer {
+    padding: 30px 50px;
+}
+
+.listcontainer ul li {
+    margin: 25px 0;
+}
+
+/* 资源下载 */
+#downloadcontainer li {
+    padding: 5px 0;
+}
+
+#downloadcontainer li:hover {
+    background-color: #ddf;
+
+}
+
+/* 分页 */
+.div_page li {
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin: 10px 1px;
+    border: 1px solid blue;
+}
+
+.div_page li:hover,
+.backblue {
+    background-color: rgb(106, 189, 234);
+    color: white;
+}
+
+#s4564561 {
+    margin: 15px 0;
+}
+
+.a1 {
+    padding: 30px 20px;
+    width: 400px;
+}
+
+.a1 p {
+    margin: 10px;
+    line-height: 22px;
+    text-indent: 1em;
+}
+
+button,
+.btn {
+    cursor: pointer;
+}
+
+
+
+body * {
+    -webkit-filter: grayscale(100%);
+    /* webkit */
+    -moz-filter: grayscale(100%);
+    /*firefox*/
+    -ms-filter: grayscale(100%);
+    /*ie9*/
+    -o-filter: grayscale(100%);
+    /*opera*/
+    filter: grayscale(100%);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    filter: gray;
+    /*ie9- */
+}

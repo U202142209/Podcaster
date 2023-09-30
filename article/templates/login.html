@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block title %}登录{% endblock %}
+
+
+{% block content %}
+<div class="registerback backgreen"></div>
+<div class="registerback backgray"></div>
+<div class="tac">
+    <div class="registerform marginauto">
+        <form id="reform" novalidate method="post">
+            {% csrf_token %}
+            <h1><img src="../static/img/decorate/register.png" alt=""></h1>
+            <!-- 用户名 -->
+            <div class="divinput">
+                <label for="username"></label>
+                {{ form.username }}
+            </div>
+            <p class="fontred"> {{ form.username.errors.0 }}</p>
+
+            <!-- 验证码 -->
+            <div class="divinput">
+                <label for="code"></label>
+                {{form.code }}
+                <a href="" id="imgcontainer"> <span class="code">
+                        <img src="/random_img/" alt="浏览器版本过低,无法加载图片">
+                    </span>
+                </a>
+            </div>
+            <p class="fontred"> {{ form.code.errors.0 }}</p>
+            <!-- 密码 -->
+
+            <div class="divinput">
+                <label for="password"></label>
+                {{ form.password }}
+            </div>
+            <p class="fontred"> {{ form.password.errors.0 }}</p>
+            <div>
+                <button class="backgreen btnlogin" type="submit">登录</button>
+            </div>
+        </form>
+        <div>
+            <br><a href="{% url 'register' %}">没有账号？去注册</a><br>
+            <br><a href="{% url 'emaillogin' %}">邮箱免密码登录</a>
+        </div>
+        <br>
+    </div>
+</div>
+
+
+<!-- 消息提醒，弹出显示 -->
+{% if message %}
+<div id="light" class="white_content">
+    <h3 class="fontred">{{message}}</h3>
+</div>
+<div id="fade" class="black_overlay"
+    onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">
+</div>
+{% endif %}
+
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+<script>
+    //判断是否为合法的邮箱
+    function IsEmail(str) {
+        var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+        return reg.test(str);
+    }
+
+    //获取验证码
+    $("#getemailcode0").click(
+        function () {
+            var email = $("#id_email").val()
+            console.log("输入的邮箱是；" + email)
+            if (!IsEmail(email)) {
+                $("#codedisplay").text('请输入有效的邮箱')
+                return
+            } else {
+                console.log("点击了按钮，即将发送网络请求")
+                $.ajax({
+                    url: "/getemailcode/",
+                    dataType: "JSON",
+                    type: "get",
+                    data: {
+                        "email": email
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        $("#codedisplay").text(res.msg)
+                    }
+                })
+            }
+        }
+    )
+</script>
+{% endblock %}

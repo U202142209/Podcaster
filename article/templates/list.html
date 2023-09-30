@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %} {{ title }}  {% endblock %}
+
+
+{% block content %}
+<div class="listcontainer">
+    <h1>{{title}}</h1>
+    <ul>
+        {% if articles %}
+        {% for article in articles %}
+        <li>
+            <a target="_blank" href="/article/?nid={{ article.nid }}">
+                <p style="color: black;">
+                    <span class="fontweight"> {{ forloop.counter }}. {{article.title}} </span>
+                    <span class="fr fontgray"> {{ article.create_time }} </span>
+                    <span class="fr fontgray articleuserindex">作者；<strong>{{article.author.username}}</strong> </span>
+                    <span class="fr fontgray ">阅读量；<strong>{{article.read_num}}</strong> </span>
+                    <span class="fr fontgray" style="padding: 0 30px ;">收藏量；<strong>{{article.love_num }}</strong></span>
+                </p>
+            </a>
+        </li>
+        {% endfor %}
+        {% else %}
+
+        {% for hot in nodes %}
+        <li>
+            <a target="_blank" href="{{hot.link}}">
+                <p style="color: black;" >{{ forloop.counter}}. {{ hot.title }}
+                    <span class="fr fontwegray">{{hot.create_time}}</span>
+                </p>
+            </a>
+        </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+
+    <div class="detail">
+        <p class="tac fontgray"> - - - - - 你已经看到了我的底线 - - - - - </p>
+    </div>
+
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+    
+</script>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+<style>
+    /* 分类菜单 */
+    .class_options span {
+        margin: 10px 5px;
+        float: left;
+        padding: 0 25px;
+        height: 35px;
+        line-height: 35px;
+        border: 1px solid rgb(47, 99, 153);
+
+        font-size: 20px;
+    }
+
+    .mar {
+        margin: 25px;
+    }
+
+    .ophover,
+    .class_options span:hover {
+        background-color: rgb(47, 99, 153);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block title %} 搜索 {% endblock %}
+
+
+{% block content %}
+<div class="searchcontainer">
+    <div class="listcontainer">
+        <h1>{{title}}</h1>
+        <p class="tac"> 查询关于 {{q}} 的内容 </p>
+        <div class="class_options box" id="class_options">
+            <span data-index="0"> 所有博客 </span>
+            <span data-index="1"> 快捷链接 </span>
+
+            <span data-index="2"> 资源下载 </span>
+        </div>
+        <div id="displaykind">
+            <ul id="downloadcontainer">
+                {% if articles %}
+                {% for article in articles %}
+                <li>
+                    <a target="_blank" href="/article/?nid={{ article.nid }}">
+                        <p>
+                            <span class="fontweight"> {{ forloop.counter }}. {{article.title}} </span>
+                            <span class="fr fontgray"> {{ article.create_time }} </span>
+                            <span class="fr fontgray articleuserindex">作者；<strong>{{article.author.username}}</strong>
+                            </span>
+                            <span class="fr fontgray ">阅读量；<strong>{{article.read_num}}</strong> </span>
+                            <span class="fr fontgray"
+                                style="padding: 0 30px ;">收藏量；<strong>{{article.love_num}}</strong></span>
+                        </p>
+                    </a>
+                </li>
+                {% endfor %}
+                {% else %}
+                <h3 class="mar tac fontgray">没有查询到有关 <strong>{{q}}</strong> 的博客</h3>
+
+                {% endif %}
+            </ul>
+            <!-- 快捷链接 -->
+            <ul id="downloadcontainer">
+                {% if links %}
+                {% for hot in links %}
+                <li>
+                    <a target="_blank" href="{{hot.link}}">
+                        <p>{{ forloop.counter}}. {{ hot.title }}
+                            <span class="fr fontwegray">{{hot.create_time}}</span>
+                        </p>
+                    </a>
+                </li>
+                {% endfor %}
+                {% else %}
+                <h3 class="mar tac fontgray">没有查询到有关 <strong>{{q}}</strong> 的快捷链接</h3>
+                {% endif %}
+            </ul>
+            <!-- 用户 -->
+            <ul id="downloadcontainer">
+                {% if resources %}
+                {% for resource in resources %}
+                <li>
+                    <p>{{forloop.counter}}. {{resource.filename }}
+                        <span class="fr">
+                            {% if request.session.info %}
+                            <a href="{{resource.src.url}}" download="{{resource.src.url}}">
+                                点击下载
+                            </a>
+                            {% else %}
+                            <a href="javascript:void(0);" class="cannotdownload">
+                                点击下载
+                            </a>
+                            {% endif %}
+                        </span>
+                    </p>
+                </li>
+                {% endfor %}
+                {% else %}
+                <h3 class="mar tac fontgray">没有查询到有关 <strong>{{q}}</strong> 的资源</h3>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="detail">
+            <p class="tac fontgray"> - - - - - 你已经看到了我的底线 - - - - - </p>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+
+
+{% block js %}
+<script src="{% static 'js/search.js' %}"></script>
+<script>
+    var class_options = document.getElementById('class_options').querySelectorAll('span');
+    class_options[0].className = "ophover"
+    var displaykind = document.getElementById('displaykind').querySelectorAll("ul");
+    for (var i = 1; i < displaykind.length; i++) {
+        displaykind[i].style.display = 'none'
+    }
+
+    for (var i = 0; i < class_options.length; i++) {
+        console.log(111)
+        class_options[i].onclick = function () {
+            for (var i = 0; i < class_options.length; i++) {
+                class_options[i].className = "none"
+            }
+            for (var i = 0; i < displaykind.length; i++) {
+                displaykind[i].style.display = 'none'
+            }
+            data_index = this.getAttribute('data-index')
+            displaykind[data_index].style.display = 'block'
+            this.className = "ophover"
+        }
+    }
+    //判断用户是否有权下载
+    $('.cannotdownload').click(
+        function () {
+            alert("您还没有登录，请先登录.")
+        }
+    )
+</script>
+{% endblock %}

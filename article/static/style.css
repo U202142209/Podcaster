@@ -1,0 +1,179 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('fonts/icomoon.eot?3lx331');
+  src: url('fonts/icomoon.eot?3lx331#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?3lx331') format('truetype'),
+    url('fonts/icomoon.woff?3lx331') format('woff'),
+    url('fonts/icomoon.svg?3lx331#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-home2:before {
+  content: "\e901";
+}
+
+.icon-user:before {
+  content: "\e971";
+}
+
+.icon-user-minus:before {
+  content: "\e974";
+}
+
+.icon-spinner4:before {
+  content: "\e97d";
+}
+
+.icon-search:before {
+  content: "\e986";
+}
+
+.icon-key2:before {
+  content: "\e98e";
+}
+
+.icon-lock:before {
+  content: "\e98f";
+}
+
+.icon-list:before {
+  content: "\e9ba";
+}
+
+.icon-list2:before {
+  content: "\e9bb";
+}
+
+.icon-menu:before {
+  content: "\e9bd";
+}
+
+.icon-star-empty:before {
+  content: "\e9d7";
+}
+
+.icon-star-full1:before {
+  content: "\e9d9";
+}
+
+.icon-heart1:before {
+  content: "\e9da";
+}
+
+.icon-pause2:before {
+  content: "\ea1d";
+}
+
+.icon-droplet1:before {
+  content: "\e90b";
+}
+
+.icon-baffled2:before {
+  content: "\e9f4";
+}
+
+.icon-paragraph-justify:before {
+  content: "\ea7a";
+}
+
+.icon-google:before {
+  content: "\ea88";
+}
+
+.icon-google2:before {
+  content: "\ea89";
+}
+
+.icon-flickr3:before {
+  content: "\eaa5";
+}
+
+.icon-joomla:before {
+  content: "\eab5";
+}
+
+.icon-soundcloud2:before {
+  content: "\eac4";
+}
+
+.icon-droplet:before {
+  content: "\e90c";
+}
+
+.icon-images:before {
+  content: "\e90e";
+}
+
+.icon-play:before {
+  content: "\e912";
+}
+
+.icon-diamonds:before {
+  content: "\e919";
+}
+
+.icon-book:before {
+  content: "\e91f";
+}
+
+.icon-file-text:before {
+  content: "\e922";
+}
+
+.icon-file-empty:before {
+  content: "\e924";
+}
+
+.icon-compass:before {
+  content: "\e949";
+}
+
+.icon-cog:before {
+  content: "\e994";
+}
+
+.icon-star-full:before {
+  content: "\e9db";
+}
+
+.icon-heart:before {
+  content: "\e9dc";
+}
+
+.icon-plus:before {
+  content: "\ea0a";
+}
+
+.icon-indent-increase:before {
+  content: "\ea7b";
+}
+
+.icon-google-drive:before {
+  content: "\ea8f";
+}
+
+.icon-css3:before {
+  content: "\eae6";
+}
+
+.icon-git:before {
+  content: "\eae7";
+}

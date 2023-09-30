@@ -1,0 +1,142 @@
+<!-- 头部导航栏 -->
+{% load static %}
+<div class="header marginauto">
+    <div class="header01 fl">
+        <a href="{% url 'index' %}">
+            <h1>
+                <img class="gray" height="60px" src="{% static 'img/decorate/logo.jpg' %}" alt="">
+            </h1>
+        </a>
+    </div>
+    <ul class="fr headernav">
+        <li>
+            <!-- 搜索按钮 -->
+            <form method="get" action="{% url 'search' %}">
+                <input value="{{q}}" name="q" id="search1" class="input1" type="text" placeholder="请输入关键字">
+                <button type="submit" id="searchbutton" class="btn input1">  </button>
+            </form>
+        </li>
+
+        {% if request.session.info %}
+        <li class="user0">
+            欢迎 <a class="fontred" href="{% url 'console' %}">{{request.session.info.username}}</a>
+        </li>
+        <li>
+            <a href="{% url 'console' %}">
+                <img height="35px" width="35px" id="touxiang0" src="{{ request.session.info.touxiang }}" alt="">
+            </a>
+        </li>
+        <li class="user0">
+            <a href="{% url 'logout' %}">退出登录</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{% url 'login' %}" id="login0" class="login1 btn input1">登录</a>
+        </li>
+        <li>
+            <img height="40px" src="/media/touxiang/user.png" alt="">
+        </li>
+        <li>
+            <a href="{% url 'register' %}" class="login1 input1">注册</a>
+        </li>
+        {% endif %}
+    </ul>
+</div><br>
+<!-- 菜单栏 -->
+
+<div class="container menuDiv">
+    <ul>
+        <li>
+            <a href="{% url 'index' %}">首页</a>
+        </li>
+        <li>
+            <a href="#">学习社区</a>
+            <ul>
+                <li><a target="_blank" href="https://www.icourse163.org/">中国大学Mooc</a></li>
+                <li><a target="_blank" href="http://i.chaoxing.com/base?t=1651822908599">学习通</a></li>
+                <li><a target="_blank" href="https://www.zhihuishu.com/">智慧树</a></li>
+                <li><a target="_blank" href="https://www.mingrisoft.com/">明日学院首页</a></li>
+                <li><a target="_blank" href="https://www.csdn.net/">csdn开发者社区</a></li>
+                <li><a target="_blank" href="https://www.yuketang.cn/v2/web/index">雨课堂</a></li>
+                <li><a target="_blank" href="https://docs.djangoproject.com/zh-hans/4.1/">Django官方文档</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">实用小工具</a>
+            <ul>
+                <li><a target="_blank" href="https://cli.im/">草料二维码生成器</a></li>
+                <li><a target="_blank"
+                        href="https://www.iconfont.cn/?spm=a313x.7781069.1998910419.d4d0a486a">阿里巴巴矢量图</a></li>
+                <li><a target="_blank" href="https://icomoon.io/">IcoMoon</a></li>
+                <li><a target="_blank" href="https://mp.weixin.qq.com/"> 微信公众平台</a></li>
+                <li><a target="_blank" href="https://getwaves.io/">掀起一些波澜</a></li>
+                <li><a target="_blank" href="https://bggenerator.com/">Geopattern |</a></li>
+                <li><a target="_blank" href="https://trianglify.io/">Trianglify.io</a></li>
+                <li><a target="_blank" href=""></a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#">放松娱乐</a>
+            <ul>
+                <li><a target="_blank" href="https://www.douyin.com/">抖音</a></li>
+                <li><a target="_blank" href="https://www.bilibili.com/">哔哩哔哩</a></li>
+                <li><a target="_blank" href="http://www.4399.com/">4399小游戏</a></li>
+                <li><a target="_blank" href=" https://h5login.qqchess.qq.com/">天天象棋网页版</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">在线小游戏</a>
+            <ul>
+                <li><a target="_blank" href="https://www.html5tricks.com/demo/jiaoben1765/index.html">中国象棋</a>
+                </li>
+                <li><a target="_blank" href="https://www.html5tricks.com/demo/wuziqi/index.html">在线五子棋</a></li>
+                <li><a target="_blank" href="https://www.html5tricks.com/demo/html5-mario/index.html">超级玛丽</a>
+                </li>
+                <li><a target="_blank"
+                        href="https://www.yikm.net/play?id=9252&n=f&t=%E6%AD%BB%E7%A5%9EVS%E7%81%AB%E5%BD%B12.0&ac=6">死神VS火影2.0</a>
+                </li>
+                <li><a target="_blank" href="https://arcxingye.github.io/zhsl/index.html">召唤神龙</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">关于本站</a>
+            <ul>
+                {% if request.session.info %}
+                <li><a href="{% url 'console' %}">控制台</a></li>
+                <li><a href="{% url 'logout' %}">安全退出</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">登录</a></li>
+                <li><a href="{% url 'register' %}">注册</a></li>
+                {% endif %}
+                <li><a target="_blank" href="/article/?nid=202209121712598505">网站导航</a></li>
+                <!-- <li><a href="">意见反馈</a></li> -->
+                <li><a href="{% url 'download' %}">资源下载</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">北科大常用网站</a>
+            <ul>
+                <li><a target="_blank" href="https://cc.ustb.edu.cn/meol/teacher.do">THEOL网络教学平台</a></li>
+                <li><a target="_blank" href="https://jwgl.ustb.edu.cn/">教务系统</a></li>
+                <li><a target="_blank" href="https://www.ustb.edu.cn/">北京科技大学官网</a></li>
+                <li><a target="_blank" href="http://ucb.ustb.edu.cn/">锐格作业平台</a></li>
+                <li><a target="_blank" href="http://222.199.222.14/">USTB校园网</a></li>
+                <li><a target="_blank" href="http://n.ustb.edu.cn/">外网访问</a></li>
+                <li><a target="_blank"
+                        href="http://202.204.52.57/">大学生入党培训平台</a>
+                </li>
+                <li><a href="https://pay.ustb.edu.cn/showPublic" target="_blank">
+                        电子支付平台
+                    </a></li>
+                <li><a target="_blank" href="https://e.ustb.edu.cn/v2/site/index">北科大网上办事大厅</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">服务</a>
+            <ul>
+                <li><a href="{% url 'download' %}">资源下载</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>

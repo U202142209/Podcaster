@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="//cdn.ckeditor.com/4.11.2/standard/ckeditor.js"></script>
+    <script src="{% static 'js/conmon.js' %}"></script>
+
+    {% block css %}
+
+    {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <!-- 继承导航栏样式 -->
+        {% include 'nav.html' %}
+        <!-- 内容 -->
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div class="container fooster">
+        <br><br>
+        <p class="tac">推荐使用PC端访问此网站，浏览鲜果更佳</p>
+        <br>
+        <p class="tac fontgray">科技改变生活</p>
+        <br>
+        <p class="tac fontgray"><a href="https://beian.miit.gov.cn/" target="_blank" > 
+            湘ICP备2023018660号</a></p>
+        <br><br><br>
+        
+        
+    </div>
+
+
+    {% block js %} {% endblock %}
+
+    <script type="text/javascript">
+        CKEDITOR.replace('id_content')
+    </script>
+
+    <script>
+        document.body.style.filter = "progid:DXImageTransform.Microsoft.BasicImage(GrayScale=1)";
+    </script>
+</body>
+
+</html>

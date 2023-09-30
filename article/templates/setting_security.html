@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+{% block title %}安全设置 {% endblock %}
+
+
+{% block content %}
+
+<div class="consoleleft fl">
+    {% include 'menu.html' %}
+</div>
+<!-- 主要部分 -->
+<div class="consoleright fl">
+    <div class="collectlist articlelist ">
+        <h1>安全设置</h1><br>
+        <p> 处于安全考虑，我们需要向邮箱；<strong id="request_email">{{request.session.email}}</strong> 发送验证码，确认是本人操作，才能修改账户密码。</p>
+        <form id="" style="width:500px ;" novalidate method="post">
+            {% csrf_token %}
+            <!-- 验证码 -->
+            <div style="position:relative ;">
+                {{form.code }}
+                <input type="button" value="获取验证码" class="btn" id="getemailcode0">
+            </div>
+            <p class="fontred"> {{ form.code.errors.0 }}</p>
+
+            <p id="codedisplay" class="fontred"> </p>
+
+            <!-- 密码 -->
+            <div>
+                {{ form.password }}
+            </div>
+            <p class="fontred"> {{ form.password.errors.0 }}</p>
+            <!-- 确认密码 -->
+            <div>
+                {{ form.conform_password }}
+            </div>
+            <p class="fontred"> {{ form.conform_password.errors.0 }}</p>
+            <br><button class="btn-primary" type="submit">提交</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+    //获取验证码
+    $("#getemailcode0").click(
+        function () {
+            $.ajax({
+                url: "/getemailcode/",
+                dataType: "JSON",
+                type: "get",
+                data: {
+                    "email": $('#request_email').text(),
+                    changepwd: true
+                },
+                success: function (res) {
+                    $("#codedisplay").text(res.msg)
+                },
+                error: function (res) {
+                    alert('Error;请求失败')
+                }
+            })
+
+        }
+    )
+</script>
+{% endblock %}

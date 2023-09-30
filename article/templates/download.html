@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %} 资源下载 {% endblock %}
+
+
+{% block content %}
+<div style="width: 1000px;" class="listcontainer fl">
+    <h1>资源下载
+        <form class="fr searchform" action="{% url 'download' %}" method="get">
+            <input value="{{value}}" type="text" name="q" id="search1" class="input1" placeholder="请输入关键字">
+            <button type="submit" id="searchbutton" class="btn input1">  </button>
+        </form>
+    </h1>
+    <p id="s4564561" class="tac fontgray"> - - - - - 一共查询到 <strong>{{num}}</strong> 条数据 - - - - - </p>
+    <ul id="downloadcontainer">
+        {% for resource in resources %}
+        <li>
+            <p>{{forloop.counter}}. {{resource.filename }}
+                <span class="fr">
+                    {% if request.session.info %}
+                    <a href="{{resource.src.url}}" download="{{resource.src.url}}">
+                        点击下载
+                    </a>
+                    {% else %}
+                    <a href="" class="cannotdownload">
+                        点击下载
+                    </a>
+                    {% endif %}
+                </span>
+            </p>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="div_page">
+        {{page_string | safe }}
+    </div>
+
+    <div class="detail">
+        <p class="tac fontgray"> - - - - - 你已经看到了我的底线 - - - - - </p>
+    </div>
+</div>
+<div class="fr a1">
+    <h2 class="tac fontgreen">温馨提示</h2>
+    <p>1.本站为登录的用户提供免费的资源下载服务</p>
+    <p>2.如果您有好的学习资源想要分享给大家，可以联系本站管理员；vx;19908428905 .将文件发给管理员，管理员上传文件到资源下载中心。</p>
+    <p>3.如果您对本站有任何的建议意见，可以添加上面的微信，反馈给我们，如在导航栏增加其他常用网站的快捷方式等。</p>
+    <p>4.我们为用户提供更好。优质的服务，如需要其他的功能、欢饮反馈</p>
+    <!-- <p>5.在学习的路上我们共同努力、共同进步。</p> -->
+</div>
+
+{% endblock %}
+{% block js %}
+
+<script>
+    //判断用户是否有权下载
+    $('.cannotdownload').click(
+        function () {
+            alert("您还没有登录，请先登录.")
+        }
+    )
+</script>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block css %}
+
+{% endblock %}
+{% block title %}注册{% endblock %}
+
+
+{% block content %}
+<div class="registerback backgreen"></div>
+<div class="registerback backgray"></div>
+<div class="tac">
+    <div class="registerform marginauto">
+        <form id="reform" novalidate method="post">
+            {% csrf_token %}
+            <h1>登录</h1>
+            <p class="fontred"> {{ form.username.errors.0 }}</p>
+            <!-- 邮箱 -->
+            <div class="divinput">
+                <label for="id__email"></label>
+                {{form.email }}
+            </div>
+            <p class="fontred"> {{ form.email.errors.0 }}</p>
+
+            <!-- 验证码 -->
+            <div class="divinput">
+                <label for="code"></label>
+                {{form.code }}
+                <input type="button" value="获取验证码" class="btn" id="getemailcode0">
+            </div>
+            <p class="fontred"> {{ form.code.errors.0 }}</p>
+            <p id="codedisplay" class="fontred"> </p>
+
+            <div>
+                <button class="backgreen btnlogin" type="submit">登录</button>
+            </div>
+            <div>
+                <br><a href="{% url 'register' %}">没有账号？去注册</a><br>
+               <br> <a href="{% url 'login' %}">账号密码登录</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block js %}
+<script>
+    //判断是否为合法的邮箱
+    function IsEmail(str) {
+        var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+        return reg.test(str);
+    }
+
+    //获取验证码
+    $("#getemailcode0").click(
+        function () {
+            var email = $("#id_email").val()
+            if (!IsEmail(email)) {
+                $("#codedisplay").text('请输入有效的邮箱')
+                return
+            } else {
+                $.ajax({
+                    url: "/getemailcode/",
+                    dataType: "JSON",
+                    type: "get",
+                    data: {
+                        "email": email,
+                        login:true
+                    },
+                    success: function (res) {
+                        $("#codedisplay").text(res.msg)
+                    },
+                    error: function (res) {
+                        alert('Error;请求失败')
+                    }
+                })
+            }
+        }
+    )
+</script>
+{% endblock %}
