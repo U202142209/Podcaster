@@ -1,0 +1,193 @@
+{% extends 'shoppingbase.html' %}
+
+{% block campuscontent %}
+<div class="bodys" id="userapp">
+        <h4 id="openid" data-openid="{{openid}}" class="tac">用户'{{openid}}'的个人主页</h4>
+        <div class="row">
+                <button class="col-xs-4"
+                        :class="{'btn btn-primary': activeIndex === 0, 'btn btn-default': activeIndex !== 0}"
+                        @click="activeIndex = 0;app.refresh();">他/她发布的</button>
+                <button class="col-xs-4"
+                        :class="{'btn btn-primary': activeIndex === 1, 'btn btn-default': activeIndex !== 1}"
+                        @click="activeIndex = 1;app.refresh();">他/她评论的</button>
+                <button class="col-xs-4"
+                        :class="{'btn btn-primary': activeIndex === 2, 'btn btn-default': activeIndex !== 2}"
+                        @click="activeIndex = 2;app.refresh();">他/她的回复通知</button>
+        </div>
+        <div>
+                <div class="xiaoyuanqiangdatacontent" id="xiaoyuanqiangdatacontent">
+                        <form action="/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="nid" value="{{nid}}" id="nid">
+                        </form>
+                </div>
+        </div>
+        <!-- 数据 -->
+        <div id="tiezidata">
+                <ul v-if="activeIndex==0">
+                        <li v-for="obj in items" :key="obj.id" :class="'campusGroup_' + obj.campusGroup + ' details'">
+                                <a :href="'/campus/detail/?id=' + obj.id" target="_blank">
+                                        <div class="row">
+                                                <div class="col-xs-3">
+                                                        <img width="100%" :src="obj.avatar" alt="">
+                                                        <br><br>
+                                                        <p class="tac" v-text="'id:'+obj.id"></p>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                        <h4>
+                                                                <span v-text="' 用户: '+obj.userName"></span>
+                                                                <span class="spanright" v-text="obj.c_time"></span>
+                                                        </h4>
+                                                        <h4 class="articletitle" v-text="obj.content"></h4>
+                                                        <p class=".articlecontent"></p>
+                                                        <p>
+                                                                <span v-text="'评论:'+obj.commentNum"> </span>
+                                                                <span class="spanright"
+                                                                        v-text="'最近动态:'+obj.comment_time"> </span>
+                                                        </p>
+                                                        <p>
+                                                                <span v-text="'浏览: '+obj.watchNum"> </span>
+                                                                <span class="spanright" v-text="'喜欢:'+obj.likeNum">
+                                                                </span>
+                                                        </p>
+                                                        <span v-text="'ip:'+obj.ip"></span>
+                                                </div>
+                                        </div>
+                                </a>
+                        </li>
+                </ul>
+                <ul v-else-if="activeIndex==1">
+                        <li v-for="obj in items" :key="obj.id" :class="'campusGroup_' + obj.campusGroup + ' details'">
+                                <div class="row">
+                                        <div class="col-xs-2">
+                                                <img width="50px" :src="obj.avatar" alt="">
+                                                <br><br><span v-text="obj.id"></span>
+                                        </div>
+                                        <div class="col-xs-10">
+                                                <p>
+                                                        <span v-text="'昵称:'+obj.userName"></span>
+                                                        <span style="float: right;" v-text="obj.c_time"></span>
+                                                </p>
+                                                <p>
+                                                </p>
+                                                <a target="_blank" v-if="obj.openid"
+                                                        :href="'/campus/getuserdetailpage?openid='+obj.applyTo">
+                                                        <p v-text="'回复:'+obj.applyTo"></p>
+                                                </a>
+                                                <a :href="'/campus/detail/?id=' + obj.pk" target="_blank">
+                                                        <h4 class="articletitle" v-text="obj.comment"></h4>
+                                                </a>
+                                                <p>
+                                                        <span v-text="'level:'+obj.level"></span>
+                                                        <span style="float: right;" v-text="'pid:'+obj.pid"></span>
+                                                </p>
+                                        </div>
+                                </div>
+                        </li>
+                </ul>
+                <ul v-else-if="activeIndex==2">
+                        <li v-for="obj in items" :key="obj.id" :class="'campusGroup_' + obj.campusGroup + ' details'">
+                                <div class="row">
+                                        <div class="col-xs-2">
+                                                <img width="50px" :src="obj.avatar" alt="">
+                                                <br><br><span v-text="obj.id"></span>
+                                        </div>
+                                        <div class="col-xs-10">
+                                                <p>
+                                                        <span v-text="'昵称:'+obj.userName"></span>
+                                                        <span style="float: right;" v-text="obj.c_time"></span>
+                                                </p>
+                                                <p>
+                                                </p>
+                                                <a target="_blank" v-if="obj.openid"
+                                                        :href="'/campus/getuserdetailpage?openid='+obj.applyTo">
+                                                        <p v-text="'回复:'+obj.applyTo"></p>
+                                                </a>
+                                                <a :href="'/campus/detail/?id=' + obj.pk" target="_blank">
+                                                        <h4 class="articletitle" v-text="obj.comment"></h4>
+                                                </a>
+                                                <p>
+                                                        <span v-text="'level:'+obj.level"></span>
+                                                        <span style="float: right;" v-text="'pid:'+obj.pid"></span>
+                                                </p>
+                                        </div>
+                                </div>
+                        </li>
+                </ul>
+        </div>
+        <div v-if="loading" id="waiting" class="tac">
+                <div><img width="15%" src="https://www.intogif.com/resource/image/loading/dots.gif" alt=""></div>
+                <h3>正在加载数据，请稍后</h3>
+        </div>
+        <!-- 分页 -->
+        <p class="tac">
+                <button @click="refresh" class="btn btn-warning">刷新</button>
+                <button @click="getMoreData" class="btn btn-success">加载更多</button>
+        </p>
+</div>
+{% endblock %}
+
+{% block campusjs %}
+<script type="text/javascript">
+        function getUserData(page = 0) {
+                if (window.navigator.webdriver == true) {
+                        alert("Warnning ! 系统检测到爬虫，无法获取数据。")
+                } else {
+                        app.loading = true;
+                        $.ajax({
+                                type: "GET",
+                                url: "/campus/userPost/",
+                                data: {
+                                        csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                                        openid: $("#openid").attr("data-openid"),
+                                        type: app.type[app.activeIndex],
+                                        length: page
+                                },
+                                dataType: "json",
+                                success: function (res) {
+                                        if (res.status) {
+                                                if (res.data.length == 0) {
+                                                        alert("没有更多了!")
+                                                        return;
+                                                }
+                                                app.items = app.items.concat(res.data);
+                                                var data = res.data;
+                                        } else {
+                                                alert(res.msg)
+                                        }
+                                },
+                                error: function (arg1) {
+                                        alert("加载数据失败");
+                                        console.log(arg1);
+                                }
+                        });
+                        app.loading = false;
+                }
+        }
+        $(function () {
+                getUserData(0)
+        });
+        var app = new Vue({
+                el: "#userapp",
+                data: {
+                        activeIndex: 0,
+                        type: ["tiezi", "comment", "message"],
+                        page: 0,
+                        items: [],
+                        loading: true,
+                },
+                methods: {
+                        getMoreData() {
+                                app.page += 1,
+                                        getUserData(app.page);
+                        },
+                        refresh() {
+                                app.page = 0;
+                                app.items = []
+                                getUserData(app.page);
+                        },
+                },
+
+        })
+</script>
+{% endblock %}

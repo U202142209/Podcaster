@@ -1,0 +1,165 @@
+{% extends 'shoppingbase.html' %}
+
+{% block campuscss %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    .container {
+        width: 300px;
+        margin: 0 auto;
+        margin-top: 100px;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .form-group input {
+        width: 100%;
+        border: 1px solid #ccc;
+    }
+
+    .fontblue {
+        color: blue;
+    }
+
+    .fontred {
+        color: red;
+    }
+
+    .fontgreen {
+        color: green;
+    }
+
+    #msg,
+    .msg {
+        margin-top: 10px;
+        font-size: larger;
+        font-weight: bolder;
+    }
+</style>
+{% endblock %}
+{% block campuscontent %}
+<div class="login-content">
+    <div class="row">
+        <div class="col-md-3 col-xs-1"></div>
+        <div class="col-md-6 col-xs-10 inner">
+            <h1 class="tac fontblue">贝壳校园墙网页版</h1>
+            <form class="login-form" method="post" action="/campus/login/">
+                <h2 class="tac">登录 / 注册</h2>
+                {% csrf_token %}
+                <div id="loginapp" class="row">
+                    <div class="form-group col-xs-12">
+                        <label for="exampleInputEmail1">邮箱</label>
+                        <input type="text" name="email" id="email" class="form-control" value="{{ email }}" required
+                            placeholder="请输入邮箱地址">
+                        <p id="codedisplay" class="fontred fontgreen msg"></p>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="exampleInputPassword1">验证码</label>
+                        <div class="row">
+                            <div class="col-xs-7">
+                                <input type="text" class="form-control" name="code" id="code" required
+                                    placeholder="请输入四位字符邮箱验证码">
+                            </div>
+                            <div class=" col-xs-5">
+                                <button type="button" class="btn button btn-primary" @click="sendEmailCode"
+                                    v-text="buttonText"></button>
+                            </div>
+                        </div>
+                        <div id="msg" class="fontred">{{ msg }}</div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <button type="submit" class="col-xs-12 btn btn-primary">登录</button>
+                    </div>
+                    <p class="tac">新用户无需注册，使用邮箱验证登录后将自动创建账号</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block campusjs %}
+<script>
+    //判断是否为合法的邮箱
+    function IsEmail(email) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    var loginapp = new Vue({
+        el: "#loginapp",
+        data: {
+            disableButton: false,
+            buttonText: '获取邮箱验证码',
+            countdown: 60,
+        },
+        methods: {
+            sendEmailCode() {
+                var thisbutton = this
+                var email = $("#email").val()
+                console.log("输入的邮箱是；" + email)
+                if (!IsEmail(email)) {
+                    $("#codedisplay").text('请输入有效的邮箱')
+                    $("#codedisplay").removeClass("fontgreen");
+                    $("#codedisplay").addClass('fontred');
+                    return
+                } else {
+                    if (loginapp.disableButton) {
+                        alert("邮箱验证码已经发送了")
+                        return;
+                    }
+                    console.log("点击了按钮，即将发送发展吗")
+                    $.ajax({
+                        url: "/campus/getemailcode/",
+                        dataType: "JSON",
+                        type: "get",
+                        data: {
+                            "email": email
+                        },
+                        success: function (res) {
+                            $("#codedisplay").text(res.msg)
+                            if (res.status) {
+                                $("#codedisplay").removeClass("fontred");
+                                $("#codedisplay").addClass('fontgreen');
+                                // 禁用按钮
+                                loginapp.disableButton = true;
+                                // 设置倒计时
+                                loginapp.countdown = 60;
+                                loginapp.startCountdown();
+                            } else {
+                                $("#codedisplay").removeClass("fontgreen");
+                                $("#codedisplay").addClass('fontred');
+                            }
+                        },
+                        error: function (res) {
+                            $("#codedisplay").text('系统发生了错误：' + res)
+                            $("#codedisplay").removeClass("fontgreen");
+                            $("#codedisplay").addClass('fontred');
+                        }
+                    })
+                }
+            },
+
+            startCountdown() {
+                if (loginapp.countdown > 0) {
+                    loginapp.buttonText = `${this.countdown}s`;
+                    loginapp.countdown--;
+                    setTimeout(this.startCountdown, 1000);
+                } else {
+                    loginapp.buttonText = '获取邮箱验证码';
+                    loginapp.disableButton = false;
+                }
+            }
+        }
+    })
+</script>
+{% endblock %}

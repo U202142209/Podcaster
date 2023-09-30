@@ -1,0 +1,208 @@
+{% extends 'shoppingbase.html' %}
+
+{% block campuscontent %}
+<div class="bodys" id="indexapp">
+        <!-- 搜索栏 -->
+        <div class="row">
+                <div class="navbar-form navbar-right row" role="search">
+                        <div class="form-group col-xs-9">
+                                <input v-model="keyword" id="addnewtagname" type="text" class="form-control"
+                                        placeholder="请输入关键字搜索帖子">
+                        </div>
+                        <button @click="getSearchData" class="btn btn-primary col-xs-3">搜索</button>
+                </div>
+        </div>
+        <!-- 下拉选择框 -->
+        <div>
+                <div class="row">
+                        <div><strong>请选择帖子分类</strong></div>
+                        <div class="form-group col-xs-6">
+                                <select @change="classifyoptionChanged" v-model="curclassify" name="categroy"
+                                        class="form-control" id="categroy" required>
+                                        <option v-for="(item, index) in classifyoptions" v-bind:value="item.value"
+                                                v-text="item.text"></option>
+                                </select>
+                        </div>
+                        <div class="form-group col-xs-6">
+                                <select @change="classifyoptionChanged" v-model="order" name="categroy"
+                                        class="form-control" id="order" required>
+                                        <option v-for="(item, index) in orderoptions" v-bind:value="item.value"
+                                                v-text="item.text"></option>
+                                </select>
+                        </div>
+                </div>
+        </div>
+
+        <!-- 数据 -->
+        <div class="xiaoyuanqiangdatacontent" id="xiaoyuanqiangdatacontent">
+                <form action="/" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="nid" value="{{nid}}" id="nid">
+                </form>
+        </div>
+        <div id="tiezidata">
+                <ul id="xiaoyuanqiangdatacontent">
+                        <li v-for="obj in data" :key="obj.id" :class="'campusGroup_' + obj.campusGroup + ' details'">
+                                <a :href="'/campus/detail/?id=' + obj.id" target="_blank">
+                                        <div class="row">
+                                                <div class="col-xs-3">
+                                                        <img width="100%" :src="obj.avatar" alt="">
+                                                        <br><br>
+                                                        <p class="tac" v-text="'id:'+obj.id"></p>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                        <h4>
+                                                                <span v-text="' 用户: '+obj.userName"></span>
+                                                                <span class="spanright" v-text="obj.c_time"></span>
+                                                        </h4>
+                                                        <h4 class="articletitle" v-text="obj.content"></h4>
+                                                        <p class=".articlecontent"></p>
+                                                        <p>
+                                                                <span v-text="'评论:'+obj.commentNum"> </span>
+                                                                <span class="spanright"
+                                                                        v-text="'最近动态:'+obj.comment_time"> </span>
+                                                        </p>
+                                                        <p>
+                                                                <span v-text="'浏览: '+obj.watchNum"> </span>
+                                                                <span class="spanright" v-text="'喜欢:'+obj.likeNum">
+                                                                </span>
+                                                        </p>
+                                                        <span v-text="'ip:'+obj.ip"></span>
+                                                </div>
+                                        </div>
+                                </a>
+                        </li>
+                </ul>
+        </div>
+        <div v-if="loading" id="waiting" class="tac">
+                <div><img width="15%" src="https://www.intogif.com/resource/image/loading/dots.gif" alt=""></div>
+                <h3>正在加载数据，请稍后</h3>
+        </div>
+        <!-- 分页 -->
+        <p class="tac">
+                <button @click="classifyoptionChanged" class="btn btn-warning">刷新</button>
+                <button @click="getMore" class="btn btn-success">加载更多</button>
+        </p>
+</div>
+{% endblock %}
+
+
+{% block campusjs %}
+<script type="text/javascript">
+        function getData(page = 0) {
+                // 通过Ajax获取数据
+                if (window.navigator.webdriver == true) {
+                        $("#pagedividerstring").hide();
+                        alert("Warnning ! 系统检测到爬虫，无法获取数据。");
+                }
+                else {
+                        var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+                        app.loading = true;
+                        $.ajax({
+                                type: "POST",
+                                url: "/campus/getDataApi/",
+                                data: {
+                                        csrfmiddlewaretoken: csrf,
+                                        currentPage: $("#currentPage").attr("data-index"),
+                                        nid: $('input[name="nid"]').val(),
+                                        // 数据
+                                        curclassify: app.curclassify,
+                                        order: app.order,
+                                        length: page,
+                                        keyword: app.keyword,
+                                },
+                                dataType: "json",
+                                success: (res) => {
+                                        console.log("请求数据成功")
+                                        app.loading = false;
+                                        console.log(app.loading)
+                                        if (res.status) {
+                                                app.data = app.data.concat(res.data);
+                                                console.log(app.data)
+                                        } else {
+                                                alert(res.msg)
+                                                console.log(res)
+                                        }
+                                },
+                                error: (arg1) => {
+                                        alert("加载数据失败");
+                                        console.log(arg1);
+                                }
+                        });
+                }
+        };
+        $(function () {
+                app.length = 0;
+                getData(0);
+        });
+        var app = new Vue({
+                el: '#indexapp',
+                data: {
+                        curclassify: '%5B%22radio4%22%2C%22radio40%22%2C%22radio41%22%2C%22radio42%22%2C%22radio43%22%5D',
+                        classifyoptions: [
+                                {
+                                        value: "%5B%22radio4%22%2C%22radio40%22%2C%22radio41%22%2C%22radio42%22%2C%22radio43%22%5D",
+                                        text: "全部"
+                                },
+                                {
+                                        value: "%5B%22radio4%22%2C%22radio40%22%5D",
+                                        text: "吐槽"
+                                },
+                                {
+                                        value: "%5B%22radio41%22%5D",
+                                        text: "表白"
+                                },
+                                {
+                                        value: "%5B%22radio42%22%5D",
+                                        text: "心愿"
+                                },
+                                {
+                                        value: "%5B%22radio43%22%5D",
+                                        text: "知乎"
+                                }
+                        ],
+                        order: 0,
+                        orderoptions: [
+                                {
+                                        value: 0,
+                                        text: "新发"
+                                },
+                                {
+                                        value: 1,
+                                        text: "新回"
+                                },
+                                {
+                                        value: 2,
+                                        text: "最热"
+                                },
+                                {
+                                        value: 3,
+                                        text: "精选"
+                                }
+                        ],
+                        length: 0,
+                        data: [],
+                        keyword: '',
+                        loading: true,
+                },
+                methods: {
+                        classifyoptionChanged() {
+                                app.length = 0;
+                                app.data = [];
+                                app.keyword = "";
+                                getData(app.length)
+                        },
+                        getMore() {
+                                app.length += 1;
+                                getData(app.length)
+                        },
+                        getSearchData() {
+                                app.length = 0;
+                                app.data = [];
+                                getData(app.length)
+                        },
+                }
+        });
+
+</script>
+{% endblock %}
